@@ -6,17 +6,18 @@ import (
 	"github.com/kogonia/xlog"
 )
 
-const dflDropboxPath = "/app/"
-const dflFilePath = "test.fb2"
-const dflToken = "token"
+var (
+	dropboxPath = flag.String("d", "/", "destination dropbox directory")
+	filePath    = flag.String("f", "", "file to upload")
+	token       = flag.String("t", "", "dropbox app token")
 
-var dropboxPath = flag.String("d", dflDropboxPath, "destination dropbox directory")
-var filePath = flag.String("f", dflFilePath, "file to upload")
-var token = flag.String("t", dflToken, "dropbox app token")
+	help = flag.Bool("h", false, "display help message")
+)
 
 func main() {
 	flag.Parse()
-	if len(*filePath) == 0 || len(*token) == 0 {
+
+	if *help || len(*filePath) == 0 || len(*token) == 0 {
 		flag.Usage()
 		return
 	}
