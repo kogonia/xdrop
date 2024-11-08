@@ -24,7 +24,7 @@ func main() {
 		return
 	}
 
-	var name string
+	name := *filePath
 	if !*preservePath {
 		name = filepath.Base(*filePath)
 	}
