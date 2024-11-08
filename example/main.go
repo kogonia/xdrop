@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/kogonia/xdrop"
 	"github.com/kogonia/xlog"
+	"path/filepath"
 )
 
 var (
@@ -11,7 +12,8 @@ var (
 	filePath    = flag.String("f", "", "file to upload")
 	token       = flag.String("t", "", "dropbox app token")
 
-	help = flag.Bool("h", false, "display help message")
+	preservePath = flag.Bool("p", false, "preserve path. If not set file path will be removed from destination file name")
+	help         = flag.Bool("h", false, "display help message")
 )
 
 func main() {
@@ -22,7 +24,11 @@ func main() {
 		return
 	}
 
-	d, err := xdrop.New(*dropboxPath, *filePath, *token)
+	var name string
+	if !*preservePath {
+		name = filepath.Base(*filePath)
+	}
+	d, err := xdrop.New(*dropboxPath, *filePath, name, *token)
 	if err != nil {
 		xlog.Fatal(err)
 	}

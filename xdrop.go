@@ -23,7 +23,7 @@ var client = &http.Client{
 	Timeout: time.Second * 60,
 }
 
-func New(dropboxPath, filePath, token string) (*DropBox, error) {
+func New(dropboxPath, filePath, fileName, token string) (*DropBox, error) {
 	file, err := binaryData(filePath)
 	if err != nil {
 		xlog.Errorf("fail to open file \"%s\": %v", filePath, err)
@@ -38,7 +38,7 @@ func New(dropboxPath, filePath, token string) (*DropBox, error) {
 			AutoRename:     false,
 			Mode:           dflMode,
 			Mute:           false,
-			Path:           dropboxPath + filePath,
+			Path:           dropboxPath + fileName,
 			StrictConflict: false,
 		},
 		DataBinary: file,
